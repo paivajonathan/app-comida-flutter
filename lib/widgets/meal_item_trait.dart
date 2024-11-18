@@ -6,9 +6,11 @@ class MealItemTrait extends StatelessWidget {
       super.key,
       required this.label,
       required this.icon,
+      this.color,
     }
   );
 
+  final Color? color;
   final String label;
   final IconData icon;
 
@@ -16,9 +18,20 @@ class MealItemTrait extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 17, color: Colors.white),
+        Icon(
+          icon,
+          size: 17,
+          color: color != null
+            ?Colors.white
+            : null,
+        ),
         const SizedBox(width: 6),
-        Text(label, style: const TextStyle(color: Colors.white))
+        Text(
+          label,
+          style: color != null
+            ? const TextStyle(color: Colors.white)
+            : null
+        ),
       ],
     );
   }

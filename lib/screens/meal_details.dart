@@ -156,10 +156,8 @@ class Title extends StatelessWidget {
         Text(
           content,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ), 
         const SizedBox(height: 10),

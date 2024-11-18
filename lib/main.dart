@@ -2,21 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto1/providers/favorite_meals.dart';
 import 'package:projeto1/providers/meal_filters.dart';
+import 'package:projeto1/providers/theme.dart';
 import 'package:projeto1/screens/tabs.dart';
 import 'package:provider/provider.dart';
 
-final theme = ThemeData(
-  useMaterial3: true,
-  textTheme: GoogleFonts.latoTextTheme(),
-  colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: const Color.fromARGB(255, 131, 57, 0),
-  ),
-);
-
-void main() {
-  runApp(const MainApp());
-}
+void main() => runApp(const MainApp());
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -31,11 +21,27 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => MealFiltersProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+        ),
       ],
-      child: MaterialApp(
-        theme: theme,
-        home: const TabsScreen(),
-      ),
+      builder: (context, child) {
+        final themeProvider = context.watch<ThemeProvider>();
+
+        return MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+            textTheme: GoogleFonts.latoTextTheme(),
+            colorScheme: ColorScheme.fromSeed(
+              brightness: themeProvider.isDarkMode
+                ? Brightness.dark
+                : Brightness.light,
+              seedColor: const Color.fromARGB(255, 131, 57, 0),
+            ),
+          ),
+          home: const TabsScreen(),
+        );
+      },
     );
   }
 }

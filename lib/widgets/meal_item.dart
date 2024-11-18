@@ -73,14 +73,17 @@ class MealItem extends StatelessWidget {
                         MealItemTrait(
                           label: "${meal.duration.toString()} min",
                           icon: Icons.schedule,
+                          color: Colors.white,
                         ),
                         MealItemTrait(
                           label: _getTitle(meal.complexity.name),
                           icon: Icons.work,
+                          color: Colors.white,
                         ),
                         MealItemTrait(
                           label: _getTitle(meal.affordability.name),
                           icon: Icons.attach_money,
+                          color: Colors.white,
                         ),
                       ],
                     )

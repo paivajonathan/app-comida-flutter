@@ -29,7 +29,14 @@ class MainDrawer extends StatelessWidget {
             onTap: () {
               onSelectedScreen("filters");
             },
-          )
+          ),
+          MainDrawerListTile(
+            title: "Theme",
+            icon: Icons.palette,
+            onTap: () {
+              onSelectedScreen("theme");
+            },
+          ),
         ],
       ),
     );

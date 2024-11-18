@@ -3,6 +3,7 @@ import 'package:projeto1/providers/favorite_meals.dart';
 import 'package:projeto1/screens/categories.dart';
 import 'package:projeto1/screens/filters.dart';
 import 'package:projeto1/screens/meals.dart';
+import 'package:projeto1/screens/theme.dart';
 import 'package:projeto1/widgets/main_drawer/main_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -21,14 +22,21 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   void _selectDrawerScreen(String identifier) {
-    if (identifier == "filters") {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const FiltersScreen(),
-        ),
-      );
-    } else {
-      Navigator.of(context).pop();
+    switch (identifier) {
+      case "filters":
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const FiltersScreen(),
+          ),
+        );
+      case "theme":
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ThemeScreen(),
+          ),
+        );
+      default:
+        Navigator.of(context).pop();
     }
   }
 

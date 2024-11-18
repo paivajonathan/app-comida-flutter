@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FilterSwitchTile extends StatelessWidget {
-  const FilterSwitchTile({
+class SwitchTile extends StatelessWidget {
+  const SwitchTile({
     super.key,
     required this.value,
     required this.onChanged,
