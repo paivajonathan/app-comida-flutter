@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto1/models/meal.dart';
 import 'package:projeto1/screens/tabs.dart';
+import 'package:projeto1/widgets/filter_switch_tile.dart';
 import 'package:projeto1/widgets/main_drawer/main_drawer.dart';
 
 class FiltersScreen extends StatefulWidget {
