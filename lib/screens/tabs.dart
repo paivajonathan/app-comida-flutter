@@ -87,8 +87,14 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedScreenIndex,
         onTap: _selectScreen,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.set_meal), label: "Categories"),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favorites"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.set_meal),
+            label: "Categories",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: "Favorites",
+          ),
         ],
       ),
     );
