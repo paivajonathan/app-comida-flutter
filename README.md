@@ -1,3 +1,3 @@
-# projeto1
+# App Comida - Programação Mobile
 
-A new Flutter project.
+Esse projeto foi desenvolvido para aplicar conceitos de programação para dispositivos móveis, utilizando a tecnologia Flutter.
