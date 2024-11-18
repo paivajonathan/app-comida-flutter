@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:projeto1/models/meal.dart';
+import 'package:projeto1/providers/favorite_meals.dart';
 import 'package:projeto1/screens/categories.dart';
 import 'package:projeto1/screens/filters.dart';
 import 'package:projeto1/screens/meals.dart';
 import 'package:projeto1/widgets/main_drawer/main_drawer.dart';
+import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
-  const TabsScreen({
-    super.key,
-    required this.mealFilters,
-    required this.favoriteMeals,
-  });
-
-  final Map<String, bool> mealFilters;
-  final List<Meal> favoriteMeals;
+  const TabsScreen({super.key});
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -30,10 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
     if (identifier == "filters") {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => FiltersScreen(
-            mealFilters: widget.mealFilters,
-            favoriteMeals: widget.favoriteMeals,
-          ),
+          builder: (context) => const FiltersScreen(),
         ),
       );
     } else {
@@ -41,39 +32,15 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
-
-  void _toggleMealFavoriteStatus(Meal meal) {
-    if (widget.favoriteMeals.contains(meal)) {
-      setState(() => widget.favoriteMeals.remove(meal));
-      _showInfoMessage("Meal removed from favorites.");
-    } else {
-      setState(() => widget.favoriteMeals.add(meal));
-      _showInfoMessage("Meal added to favorites.");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    Widget activeScreen = CategoriesScreen(
-      onToggleFavorite: _toggleMealFavoriteStatus,
-      mealFilters: widget.mealFilters,
-    );
+    final favoriteMealsProvider = Provider.of<FavoriteMealsProvider>(context);
+
+    Widget activeScreen = const CategoriesScreen();
     String activeScreenTitle = "Categories";
 
     if (_selectedScreenIndex == 1) {
-      activeScreen = MealsScreen(
-        meals: widget.favoriteMeals,
-        mealFilters: widget.mealFilters,
-        onToggleFavorite: _toggleMealFavoriteStatus,
-      );
+      activeScreen = MealsScreen(meals: favoriteMealsProvider.favoriteMeals);
       activeScreenTitle = "Favorites";
     }
 

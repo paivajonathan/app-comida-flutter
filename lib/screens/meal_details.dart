@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:projeto1/models/meal.dart';
+import 'package:projeto1/providers/favorite_meals.dart';
 import 'package:projeto1/widgets/meal_item_trait.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealDetails extends StatelessWidget {
   const MealDetails({
     super.key,
     required this.meal,
-    required this.onToggleFavorite,
   });
 
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
+
+  String _getTitle(String text) {
+    return text[0].toUpperCase() + text.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final favoriteMealProvider = Provider.of<FavoriteMealsProvider>(context);
+
     final additionalInfo = [
       if (meal.isGlutenFree)
         const ListTile(
@@ -46,11 +52,16 @@ class MealDetails extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.star),
-            onPressed: () {
-              onToggleFavorite(meal);
-            },
+          Container(
+            margin: const EdgeInsets.only(right: 50),
+            child: IconButton(
+              icon: favoriteMealProvider.check(meal)
+                ? const Icon(Icons.star)
+                : const Icon(Icons.star_border),
+              onPressed: () {
+                favoriteMealProvider.favoriteOrUnfavorite(meal);
+              },
+            ),
           )
         ],
       ),
@@ -94,12 +105,12 @@ class MealDetails extends StatelessWidget {
             if (additionalInfo.isNotEmpty)
               Column(
                 children: [
-                  _showTitle("Additional Info"),
+                  const Title(content: "Additional Info"),
                   ...additionalInfo,
                 ],
               ),
 
-            _showTitle("Ingredients"),            
+            const Title(content: "Ingredients"),            
             ListView.builder(
               shrinkWrap: true,
               itemCount: meal.ingredients.length,
@@ -111,7 +122,7 @@ class MealDetails extends StatelessWidget {
               }
             ),
             
-            _showTitle("Steps"),
+            const Title(content: "Steps"),
             ListView.builder(
               shrinkWrap: true,
               itemCount: meal.steps.length,
@@ -127,17 +138,23 @@ class MealDetails extends StatelessWidget {
       ),
     );
   }
+}
 
-  String _getTitle(String text) {
-    return text[0].toUpperCase() + text.substring(1);
-  }
+class Title extends StatelessWidget {
+  const Title({
+    super.key,
+    required this.content,
+  });
 
-  Widget _showTitle(String title) {
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 10),
         Text(
-          title,
+          content,
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 20,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:projeto1/models/meal.dart';
+import 'package:projeto1/providers/favorite_meals.dart';
+import 'package:projeto1/providers/meal_filters.dart';
 import 'package:projeto1/screens/tabs.dart';
+import 'package:provider/provider.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -21,27 +23,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme,
-      home: const Wrapper(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => FavoriteMealsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MealFiltersProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: theme,
+        home: const TabsScreen(),
+      ),
     );
-  }
-}
-
-class Wrapper extends StatelessWidget {
-  const Wrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Map<String, bool> mealFilters = {
-      "isGlutenFree": false,
-      "isLactoseFree": false,
-      "isVegetarian": false,
-      "isVegan": false,
-    };
-
-    List<Meal> favoriteMeals = [];
-
-    return TabsScreen(mealFilters: mealFilters, favoriteMeals: favoriteMeals);
   }
 }

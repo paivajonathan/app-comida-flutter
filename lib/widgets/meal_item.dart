@@ -9,12 +9,10 @@ class MealItem extends StatelessWidget {
     {
       super.key,
       required this.meal,
-      required this.onToggleFavorite,
     }
   );
 
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
 
   String _getTitle(String text) {
     return text[0].toUpperCase() + text.substring(1);
@@ -33,7 +31,6 @@ class MealItem extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => MealDetails(
                 meal: meal,
-                onToggleFavorite: onToggleFavorite,
               ),
             ),
           );

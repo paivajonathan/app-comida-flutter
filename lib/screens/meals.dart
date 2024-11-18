@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto1/models/meal.dart';
+import 'package:projeto1/providers/meal_filters.dart';
 import 'package:projeto1/widgets/meal_item.dart';
+import 'package:provider/provider.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen(
@@ -8,18 +10,16 @@ class MealsScreen extends StatelessWidget {
       super.key,
       this.title,
       required this.meals,
-      required this.onToggleFavorite,
-      required this.mealFilters,
     }
   );
 
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onToggleFavorite;
-  final Map<String, bool> mealFilters;
 
   @override
   Widget build(BuildContext context) {
+    final mealFiltersProvider = Provider.of<MealFiltersProvider>(context);
+
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -44,10 +44,10 @@ class MealsScreen extends StatelessWidget {
     if (meals.isNotEmpty) {
       List<Meal> filteredMeals = meals.where(
         (meal) {
-          bool isGlutenFree  = mealFilters["isGlutenFree"]  ?? false;
-          bool isLactoseFree = mealFilters["isLactoseFree"] ?? false;
-          bool isVegan       = mealFilters["isVegan"]       ?? false;
-          bool isVegetarian  = mealFilters["isVegetarian"]  ?? false;
+          bool isGlutenFree  = mealFiltersProvider.isGlutenFree;
+          bool isLactoseFree = mealFiltersProvider.isLactoseFree;
+          bool isVegan       = mealFiltersProvider.isVegan;
+          bool isVegetarian  = mealFiltersProvider.isVegetarian;
 
           if (isGlutenFree  && !meal.isGlutenFree)  return false;
           if (isLactoseFree && !meal.isLactoseFree) return false;
@@ -64,7 +64,6 @@ class MealsScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return MealItem(
               meal: filteredMeals[index],
-              onToggleFavorite: onToggleFavorite,
             );
           }
         );

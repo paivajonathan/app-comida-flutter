@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projeto1/data/dummy_data.dart';
-import 'package:projeto1/models/meal.dart';
 import 'package:projeto1/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen(
-    {
-      super.key,
-      required this.onToggleFavorite,
-      required this.mealFilters,
-    }
-  );
-
-  final void Function(Meal meal) onToggleFavorite;
-  final Map<String, bool> mealFilters;
+  const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +20,6 @@ class CategoriesScreen extends StatelessWidget {
           for (final category in availableCategories) 
             CategoryGridItem(
               category: category,
-              onToggleFavorite: onToggleFavorite,
-              mealFilters: mealFilters,
             )
         ],
       ),

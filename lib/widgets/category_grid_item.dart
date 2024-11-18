@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto1/data/dummy_data.dart';
 import 'package:projeto1/models/category.dart';
-import 'package:projeto1/models/meal.dart';
 import 'package:projeto1/screens/meals.dart';
 
 class CategoryGridItem extends StatelessWidget {
@@ -9,14 +8,10 @@ class CategoryGridItem extends StatelessWidget {
     {
       super.key,
       required this.category,
-      required this.onToggleFavorite,
-      required this.mealFilters,
     }
   );
 
   final Category category;
-  final void Function(Meal meal) onToggleFavorite;
-  final Map<String, bool> mealFilters;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +22,6 @@ class CategoryGridItem extends StatelessWidget {
             return MealsScreen(
               title: category.title,
               meals: dummyMeals.where((meal) => meal.categories.contains(category.id)).toList(),
-              mealFilters: mealFilters,
-              onToggleFavorite: onToggleFavorite,
             );
           }),
         );
